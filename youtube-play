@@ -1,0 +1,109 @@
+{
+  "name": "Play",
+  "permissions": "NONE",
+  "restriction": "1",
+  "_id": "VUhaw",
+  "actions": [
+    {
+      "member": "0",
+      "varName": "",
+      "info": "4",
+      "varName2": "",
+      "iftrue": "0",
+      "iftrueVal": "",
+      "iffalse": "2",
+      "iffalseVal": "13",
+      "name": "Check If Member"
+    },
+    {
+      "condition": "0",
+      "comparison": "3",
+      "value": "1",
+      "iftrue": "0",
+      "iftrueVal": "",
+      "iffalse": "1",
+      "iffalseVal": "",
+      "name": "Check Parameters"
+    },
+    {
+      "info": "1",
+      "infoIndex": "1",
+      "storage": "1",
+      "varName": "search",
+      "name": "Store Command Params"
+    },
+    {
+      "channel": "0",
+      "varName": "",
+      "message": "**Searching Youtube: ${tempVars(\"search\")}... Adding to queue**",
+      "storage": "0",
+      "varName2": "",
+      "iffalse": "0",
+      "iffalseVal": "",
+      "name": "Send Message"
+    },
+    {
+      "token": "",
+      "user": "",
+      "pass": "",
+      "url": "https://www.googleapis.com/youtube/v3/search?maxResults=1&part=snippet&q=${tempVars(\"title/link\")}&key=",
+      "path": "$.items[0].id.videoId",
+      "storage": "2",
+      "varName": "vidid",
+      "debugMode": "0",
+      "headers": "",
+      "reUse": "1",
+      "name": "Store Json From WebAPI"
+    },
+    {
+      "token": "",
+      "user": "",
+      "pass": "",
+      "url": "https://www.googleapis.com/youtube/v3/search?maxResults=1&part=snippet&q=${tempVars(\"title/link\")}&key=",
+      "path": "$.items[0].snippet.title",
+      "storage": "2",
+      "varName": "vidname",
+      "debugMode": "0",
+      "headers": "",
+      "reUse": "1",
+      "name": "Store Json From WebAPI"
+    },
+    {
+      "channel": "0",
+      "varName": "",
+      "name": "Join Voice Channel"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=${serverVars(\"vidid\")}",
+      "seek": "0",
+      "volume": "50",
+      "passes": "1",
+      "bitrate": "144",
+      "type": "0",
+      "name": "Play YouTube Video"
+    },
+    {
+      "channel": "0",
+      "varName": "",
+      "message": "▶Now playing: ${serverVars(\"vidname\")}",
+      "storage": "0",
+      "varName2": "",
+      "iffalse": "0",
+      "iffalseVal": "",
+      "name": "Send Message"
+    },
+    {
+      "name": "End Action Sequence"
+    },
+    {
+      "channel": "0",
+      "varName": "",
+      "message": "**${member} You must be in a voice channel to use this command!**",
+      "storage": "0",
+      "varName2": "",
+      "iffalse": "0",
+      "iffalseVal": "",
+      "name": "Send Message"
+    }
+  ]
+}
